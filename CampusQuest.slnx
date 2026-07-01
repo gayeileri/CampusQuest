@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="CampusQuest.API/CampusQuest.API.csproj" Id="48935deb-57e8-4944-be09-e9a0d7e8284c" />
+  <Project Path="CampusQuest.Application/CampusQuest.Application.csproj" Id="b7a1fafe-e612-44b1-ac1a-6d1ab360c2f2" />
+  <Project Path="CampusQuest.Domain/CampusQuest.Domain.csproj" Id="2114ab9a-12d9-40e1-ba19-c96d2df101be" />
+  <Project Path="CampusQuest.Infrastructure/CampusQuest.Infrastructure.csproj" Id="f19597b4-79b1-499d-8e00-674353838564" />
+  <Project Path="CampusQuest.Mobile/CampusQuest.Mobile.csproj" Id="e985010c-b9b2-446e-a4f4-c25532806aaa" />
+  <Project Path="CampusQuest.Shared/CampusQuest.Shared.csproj" Id="2f9de5be-1e9a-41c8-8996-139c42203876" />
+  <Project Path="CampusQuest.Tests/CampusQuest.Tests.csproj" Id="a5b5f733-f152-4a5b-90a9-d151975966b5" />
+</Solution>
