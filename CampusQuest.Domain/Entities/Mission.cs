@@ -13,4 +13,7 @@ public class Mission
     public double RadiusInMeters { get; set; } = 20.0; // Allowed range to complete the mission
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    // Navigation for many-to-many via UserMission
+    public ICollection<UserMission>? UserMissions { get; set; }
 }
