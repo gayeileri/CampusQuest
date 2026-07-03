@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CampusQuest.Mobile.Views.LoginPage"
+             Title="Login"
+             BackgroundColor="#F3F4F6">
+
+    <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
+        <Entry x:Name="EmailEntry" Placeholder="Enter your email" />
+        <Entry x:Name="PasswordEntry" Placeholder="Enter your password" IsPassword="True" />
+        <Button x:Name="LoginButton" Text="Sign In" Clicked="OnLoginClicked" />
+        <Label Text="Sign Up" HorizontalOptions="Center">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnSignUpTapped" />
+            </Label.GestureRecognizers>
+        </Label>
+    </VerticalStackLayout>
+</ContentPage>
