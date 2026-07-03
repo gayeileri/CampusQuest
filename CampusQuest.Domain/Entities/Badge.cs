@@ -8,4 +8,7 @@ public class Badge
     public string IconUrl { get; set; } = string.Empty; // URL for mobile app to render the badge icon
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    // Navigation for many-to-many via UserBadge
+    public ICollection<UserBadge>? UserBadges { get; set; }
 }
