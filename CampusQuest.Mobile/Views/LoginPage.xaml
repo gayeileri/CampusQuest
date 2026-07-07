@@ -1,18 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:CampusQuest.Mobile.ViewModels"
              x:Class="CampusQuest.Mobile.Views.LoginPage"
-             Title="Login"
-             BackgroundColor="#F3F4F6">
+             Title="CampusQuest Login"
+             Shell.NavBarIsVisible="False">
 
-    <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
-        <Entry x:Name="EmailEntry" Placeholder="Enter your email" />
-        <Entry x:Name="PasswordEntry" Placeholder="Enter your password" IsPassword="True" />
-        <Button x:Name="LoginButton" Text="Sign In" Clicked="OnLoginClicked" />
-        <Label Text="Sign Up" HorizontalOptions="Center">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnSignUpTapped" />
-            </Label.GestureRecognizers>
-        </Label>
-    </VerticalStackLayout>
+    <ContentPage.BindingContext>
+        <viewmodels:LoginViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="CenterAndExpand">
+
+            <!-- Logo / Header Placeholder -->
+            <Image Source="dotnet_bot.png" HeightRequest="120" HorizontalOptions="Center" Margin="0,0,0,20"/>
+
+            <Label Text="Welcome to CampusQuest" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" />
+
+            <!-- Input Fields -->
+            <Entry Placeholder="Email Address" 
+                   Text="{Binding Email}" 
+                   Keyboard="Email" />
+
+            <Entry Placeholder="Password" 
+                   Text="{Binding Password}" 
+                   IsPassword="True" />
+
+            <!-- Error Feedback -->
+            <Label Text="{Binding ErrorMessage}" 
+                   TextColor="Red" 
+                   HorizontalOptions="Center" 
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}" />
+
+            <!-- Action Button -->
+            <Button Text="Login" 
+                    Command="{Binding LoginCommand}" 
+                    HeightRequest="50" 
+                    Margin="0,10,0,0" />
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                               IsVisible="{Binding IsBusy}" 
+                               HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

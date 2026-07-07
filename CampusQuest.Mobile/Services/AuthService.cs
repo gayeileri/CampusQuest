@@ -42,9 +42,21 @@ namespace CampusQuest.Mobile.Services
                 var response = await _httpClient.PostAsJsonAsync("login", new { email, password });
                 if (response.IsSuccessStatusCode)
                 {
+                    // Read the dynamic response from the backend
                     var content = await response.Content.ReadAsStringAsync();
-                    // TODO: Store the authentication token or user session data locally in the future
-                    return true;
+                    using var doc = JsonDocument.Parse(content);
+
+                    // Extract the token safely without needing full DTO classes
+                    if (doc.RootElement.TryGetProperty("token", out var tokenProp))
+                    {
+                        var token = tokenProp.GetString();
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            // Safely store the JWT token locally on the device
+                            await SecureStorage.Default.SetAsync("auth_token", token);
+                            return true;
+                        }
+                    }
                 }
                 return false;
             }
@@ -52,6 +64,12 @@ namespace CampusQuest.Mobile.Services
             {
                 return false;
             }
+        }
+
+        public void Logout()
+        {
+            // Remove token on logout
+            SecureStorage.Default.Remove("auth_token");
         }
     }
 }

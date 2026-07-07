@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapibuilder
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 // Register DbContext with SQLite Provider
@@ -17,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // 🚀 CRITICAL FIX: Always register the Repository BEFORE the Service!
 builder.Services.AddScoped<CampusQuest.Infrastructure.Repositories.UserRepository>();
 builder.Services.AddScoped<CampusQuest.Infrastructure.Services.UserService>();
+builder.Services.AddScoped<CampusQuest.Infrastructure.Services.JwtProvider>();
 
 var app = builder.Build();
 
@@ -44,7 +45,9 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
+
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

@@ -2,9 +2,11 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:CampusQuest.Mobile"
+             xmlns:converters="clr-namespace:CampusQuest.Mobile.Converters"
              x:Class="CampusQuest.Mobile.App">
     <Application.Resources>
         <ResourceDictionary>
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />

@@ -68,20 +68,11 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
+		<PackageReference Include="ZXing.Net.MAUI" Version="0.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\CampusQuest.Shared\CampusQuest.Shared.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ViewModels\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <!-- Removed explicit MauiXaml generator override for Views\LoginPage.xaml.
-		   Let the SDK handle XAML source generation defaults so InitializeComponent and
-		   x:Name members are generated correctly. -->
 	</ItemGroup>
 
 </Project>
