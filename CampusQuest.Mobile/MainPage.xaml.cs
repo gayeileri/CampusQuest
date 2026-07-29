@@ -24,7 +24,8 @@ public partial class MainPage : ContentPage
                 var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
                 string title = query["title"] ?? "Görev";
 
-                // URL'den pinin koordinatlarını okuyoruz
+                // URL'den pinin id ve koordinatlarını okuyoruz
+                int.TryParse(query["id"], out int missionId);
                 double.TryParse(query["lat"], NumberStyles.Any, CultureInfo.InvariantCulture, out double lat);
                 double.TryParse(query["lng"], NumberStyles.Any, CultureInfo.InvariantCulture, out double lng);
 
@@ -44,8 +45,8 @@ public partial class MainPage : ContentPage
                     return;
                 }
 
-                // Koordinatları ve başlığı QR tarama sayfasına gönderiyoruz
-                await Navigation.PushAsync(new QrScannerPage(title, lat, lng));
+                // Koordinatları, id ve başlığı QR tarama sayfasına gönderiyoruz
+                await Navigation.PushAsync(new QrScannerPage(missionId, title, lat, lng));
             }
         };
 
