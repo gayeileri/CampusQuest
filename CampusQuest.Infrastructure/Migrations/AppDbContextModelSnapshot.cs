@@ -40,7 +40,7 @@ namespace CampusQuest.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Badges");
+                    b.ToTable("Badge");
                 });
 
             modelBuilder.Entity("CampusQuest.Domain.Entities.Mission", b =>
@@ -62,6 +62,10 @@ namespace CampusQuest.Infrastructure.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("REAL");
 
+                    b.Property<string>("QrCodeSecret")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<double>("RadiusInMeters")
                         .HasColumnType("REAL");
 
@@ -75,6 +79,68 @@ namespace CampusQuest.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Missions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Kütüphanede sessizce çalış ve QR kodu okut.",
+                            Latitude = 37.059199999999997,
+                            Longitude = 35.355200000000004,
+                            QrCodeSecret = "CAMPUSQUEST_KUTUPHANE",
+                            RadiusInMeters = 20.0,
+                            Title = "Merkezi Kütüphane",
+                            XpReward = 100
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Günün menüsünü tat ve enerjini topla.",
+                            Latitude = 37.058,
+                            Longitude = 35.353999999999999,
+                            QrCodeSecret = "CAMPUSQUEST_YEMEKHANE",
+                            RadiusInMeters = 20.0,
+                            Title = "Öğrenci Yemekhanesi",
+                            XpReward = 150
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Kampüsün yönetim merkezini ziyaret et.",
+                            Latitude = 37.061,
+                            Longitude = 35.356999999999999,
+                            QrCodeSecret = "CAMPUSQUEST_REKTORLUK",
+                            RadiusInMeters = 20.0,
+                            Title = "Rektörlük Binası",
+                            XpReward = 200
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-444444444444"),
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Geleceğin teknolojilerini yerinde incele.",
+                            Latitude = 37.0565,
+                            Longitude = 35.351999999999997,
+                            QrCodeSecret = "CAMPUSQUEST_MUHENDISLIK",
+                            RadiusInMeters = 20.0,
+                            Title = "Mühendislik Fakültesi",
+                            XpReward = 120
+                        },
+                        new
+                        {
+                            Id = new Guid("55555555-5555-5555-5555-555555555555"),
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Sağlam kafanın sağlam vücutta bulunduğunu kanıtla.",
+                            Latitude = 37.063000000000002,
+                            Longitude = 35.359000000000002,
+                            QrCodeSecret = "CAMPUSQUEST_SPOR",
+                            RadiusInMeters = 20.0,
+                            Title = "Spor Salonu",
+                            XpReward = 100
+                        });
                 });
 
             modelBuilder.Entity("CampusQuest.Domain.Entities.User", b =>
@@ -128,9 +194,6 @@ namespace CampusQuest.Infrastructure.Migrations
                     b.Property<Guid>("BadgeId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("BadgeId1")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("EarnedAt")
                         .HasColumnType("TEXT");
 
@@ -141,11 +204,9 @@ namespace CampusQuest.Infrastructure.Migrations
 
                     b.HasIndex("BadgeId");
 
-                    b.HasIndex("BadgeId1");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBadges");
+                    b.ToTable("UserBadge");
                 });
 
             modelBuilder.Entity("CampusQuest.Domain.Entities.UserMission", b =>
@@ -160,17 +221,12 @@ namespace CampusQuest.Infrastructure.Migrations
                     b.Property<Guid>("MissionId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("MissionId1")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MissionId");
-
-                    b.HasIndex("MissionId1");
 
                     b.HasIndex("UserId");
 
@@ -180,14 +236,10 @@ namespace CampusQuest.Infrastructure.Migrations
             modelBuilder.Entity("CampusQuest.Domain.Entities.UserBadge", b =>
                 {
                     b.HasOne("CampusQuest.Domain.Entities.Badge", "Badge")
-                        .WithMany()
+                        .WithMany("UserBadges")
                         .HasForeignKey("BadgeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("CampusQuest.Domain.Entities.Badge", null)
-                        .WithMany("UserBadges")
-                        .HasForeignKey("BadgeId1");
 
                     b.HasOne("CampusQuest.Domain.Entities.User", "User")
                         .WithMany("EarnedBadges")
@@ -203,14 +255,10 @@ namespace CampusQuest.Infrastructure.Migrations
             modelBuilder.Entity("CampusQuest.Domain.Entities.UserMission", b =>
                 {
                     b.HasOne("CampusQuest.Domain.Entities.Mission", "Mission")
-                        .WithMany()
+                        .WithMany("UserMissions")
                         .HasForeignKey("MissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("CampusQuest.Domain.Entities.Mission", null)
-                        .WithMany("UserMissions")
-                        .HasForeignKey("MissionId1");
 
                     b.HasOne("CampusQuest.Domain.Entities.User", "User")
                         .WithMany("CompletedMissions")
