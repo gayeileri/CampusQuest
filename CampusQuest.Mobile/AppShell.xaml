@@ -6,9 +6,19 @@
     xmlns:local="clr-namespace:CampusQuest.Mobile"
     Title="CampusQuest.Mobile">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <Tab Title="Keşfet">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
+        </Tab>
+        <Tab Title="Sıralama">
+            <ShellContent ContentTemplate="{DataTemplate local:LeaderboardPage}" Route="LeaderboardPage" />
+        </Tab>
+        <Tab Title="Görevler">
+            <ShellContent ContentTemplate="{DataTemplate local:TasksPage}" Route="TasksPage" />
+        </Tab>
+        <Tab Title="Profil">
+            <ShellContent ContentTemplate="{DataTemplate local:ProfilePage}" Route="ProfilePage" />
+        </Tab>
+    </TabBar>
 
 </Shell>

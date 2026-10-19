@@ -1,14 +1,24 @@
-﻿using System.Globalization;
+using System.Globalization;
 
 namespace CampusQuest.Mobile;
 
 public partial class MainPage : ContentPage
 {
+    private CancellationTokenSource? _locationCts;
+
     public MainPage()
     {
         InitializeComponent();
         SetupWebViewEvents();
         LoadMap();
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        _locationCts?.Cancel();
+        _locationCts?.Dispose();
+        _locationCts = null;
     }
 
     private void SetupWebViewEvents()
@@ -50,12 +60,28 @@ public partial class MainPage : ContentPage
             }
         };
 
-        // Harita tamamen yüklendikten sonra canlı GPS konumunu getir
+        // Harita tamamen yüklendikten sonra canlı GPS konumunu periyodik olarak güncelle
         MapWebView.Loaded += async (sender, e) =>
         {
             await Task.Delay(2000);
-            await GetUserLocationAndShowOnMapAsync();
+            StartContinuousLocationTracking();
         };
+    }
+
+    private void StartContinuousLocationTracking()
+    {
+        _locationCts?.Cancel();
+        _locationCts = new CancellationTokenSource();
+        var token = _locationCts.Token;
+
+        _ = Task.Run(async () =>
+        {
+            while (!token.IsCancellationRequested)
+            {
+                await GetUserLocationAndShowOnMapAsync();
+                try { await Task.Delay(5000, token); } catch { break; }
+            }
+        }, token);
     }
 
     private async Task GetUserLocationAndShowOnMapAsync()
@@ -170,4 +196,5 @@ public partial class MainPage : ContentPage
 
         MapWebView.Source = htmlSource;
     }
+
 }

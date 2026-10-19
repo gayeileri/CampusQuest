@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CampusQuest.Mobile.NotificationSettingsPage"
+             Title="Bildirim Ayarları"
+             BackgroundColor="#F5F7FA">
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            
+            <Border StrokeShape="RoundRectangle 16" BackgroundColor="White" Stroke="Transparent" Padding="0">
+                <VerticalStackLayout>
+                    <!-- Bildirim 1 -->
+                    <Grid ColumnDefinitions="*, Auto" Padding="16" HeightRequest="60">
+                        <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                            <Label Text="Yeni Görevler" FontSize="16" FontAttributes="Bold" TextColor="#333333" />
+                            <Label Text="Kampüse yeni görevler eklendiğinde haber ver" FontSize="12" TextColor="#757575" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="1" IsToggled="True" OnColor="#4CAF50" VerticalOptions="Center" />
+                    </Grid>
+                    <BoxView HeightRequest="1" BackgroundColor="#EEEEEE" Margin="16,0" />
+                    
+                    <!-- Bildirim 2 -->
+                    <Grid ColumnDefinitions="*, Auto" Padding="16" HeightRequest="60">
+                        <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                            <Label Text="Sıralama Güncellemeleri" FontSize="16" FontAttributes="Bold" TextColor="#333333" />
+                            <Label Text="Birisi seni sıralamada geçtiğinde haber ver" FontSize="12" TextColor="#757575" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="1" IsToggled="True" OnColor="#4CAF50" VerticalOptions="Center" />
+                    </Grid>
+                    <BoxView HeightRequest="1" BackgroundColor="#EEEEEE" Margin="16,0" />
+
+                    <!-- Bildirim 3 -->
+                    <Grid ColumnDefinitions="*, Auto" Padding="16" HeightRequest="60">
+                        <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                            <Label Text="Etkinlik Hatırlatıcıları" FontSize="16" FontAttributes="Bold" TextColor="#333333" />
+                            <Label Text="Kampüs etkinliklerinden önce hatırlat" FontSize="12" TextColor="#757575" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="1" IsToggled="False" OnColor="#4CAF50" VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
