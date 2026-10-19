@@ -3,27 +3,85 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
              x:Class="CampusQuest.Mobile.QrScannerPage"
-             Title="QR Kod Tara">
+             Title="QR Kod Tara"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="*, Auto">
-
-        <!-- Kamera ve QR Tarama Alanı -->
+    <Grid>
+        <!-- Kamera ve QR Tarama Alanı (Tam Ekran Arka Plan) -->
         <zxing:CameraBarcodeReaderView
             x:Name="BarcodeReader"
-            Grid.Row="0"
             BarcodesDetected="BarcodeReader_BarcodesDetected"
             IsDetecting="True"
-            VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand" />
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill" />
 
-        <!-- Alt Kısımda İptal Butonu -->
-        <Button Grid.Row="1" 
-                Text="İptal / Haritaya Dön" 
-                Clicked="CancelButton_Clicked" 
-                Margin="20" 
-                BackgroundColor="DarkGreen" 
-                TextColor="White" 
-                FontAttributes="Bold" />
+        <!-- Karanlık Overlay + Ortada Şeffaf Kare Delik -->
+        <Grid InputTransparent="True" RowDefinitions="*, 260, *">
+            <!-- Üst Karanlık Maske -->
+            <BoxView Grid.Row="0" BackgroundColor="#99000000" />
+
+            <Grid Grid.Row="1" ColumnDefinitions="*, 260, *">
+                <!-- Sol Karanlık Maske -->
+                <BoxView Grid.Column="0" BackgroundColor="#99000000" />
+
+                <!-- Ortadaki QR Tarama Çerçevesi -->
+                <Border Grid.Column="1" 
+                        Stroke="{StaticResource Primary}" 
+                        StrokeThickness="3" 
+                        BackgroundColor="Transparent"
+                        StrokeShape="RoundRectangle 16" />
+
+                <!-- Sağ Karanlık Maske -->
+                <BoxView Grid.Column="2" BackgroundColor="#99000000" />
+            </Grid>
+
+            <!-- Alt Karanlık Maske -->
+            <BoxView Grid.Row="2" BackgroundColor="#99000000" />
+        </Grid>
+
+        <!-- Üst Bilgi Yazısı -->
+        <VerticalStackLayout VerticalOptions="Start" 
+                             Padding="20,60,20,0" 
+                             Spacing="4"
+                             InputTransparent="True">
+            <Label Text="📷 QR Kod Tara" 
+                   FontSize="22" 
+                   FontAttributes="Bold" 
+                   TextColor="White" 
+                   HorizontalOptions="Center" />
+            <Label Text="Görev noktasındaki QR kodu çerçeve içine hizalayın" 
+                   FontSize="13" 
+                   TextColor="#C8E6C9" 
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Alt Butonlar -->
+        <Grid VerticalOptions="End" 
+              Padding="24,0,24,48"
+              ColumnDefinitions="*, *"
+              ColumnSpacing="16">
+
+            <Button Grid.Column="0" 
+                    x:Name="FlashButton"
+                    Text="🔦 Fener" 
+                    Clicked="FlashButton_Clicked"
+                    BackgroundColor="#44FFFFFF" 
+                    TextColor="White" 
+                    CornerRadius="24"
+                    FontAttributes="Bold"
+                    HeightRequest="50" />
+
+            <Button Grid.Column="1" 
+                    Text="İptal / Geri Dön" 
+                    Clicked="CancelButton_Clicked" 
+                    BackgroundColor="#D32F2F" 
+                    TextColor="White" 
+                    CornerRadius="24"
+                    FontAttributes="Bold"
+                    HeightRequest="50" />
+        </Grid>
     </Grid>
 
 </ContentPage>

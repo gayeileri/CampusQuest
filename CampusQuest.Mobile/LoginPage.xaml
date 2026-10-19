@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CampusQuest.Mobile.LoginPage"
+             BackgroundColor="White"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,80,30,30" Spacing="24" HorizontalOptions="Center">
+
+            <!-- Logo -->
+            <Image Source="logo.png" WidthRequest="120" HeightRequest="120" HorizontalOptions="Center" />
+
+            <!-- Title -->
+            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                <Label Text="CampusQuest" FontSize="24" FontAttributes="Bold" TextColor="#1B5E20" HorizontalOptions="Center" />
+                <Label Text="Kampüs macerana buradan başla." FontSize="14" TextColor="#757575" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Inputs -->
+            <VerticalStackLayout Spacing="16" Margin="0,20,0,0">
+                
+                <Border StrokeShape="RoundRectangle 24" Stroke="#E0E0E0" BackgroundColor="White" Padding="16,0" HeightRequest="56">
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Label Grid.Column="0" Text="📧" FontSize="18" VerticalOptions="Center" TextColor="#757575" />
+                        <Entry x:Name="EmailEntry" Grid.Column="1" Placeholder="Öğrenci E-postası" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+                    </Grid>
+                </Border>
+
+                <Border StrokeShape="RoundRectangle 24" Stroke="#E0E0E0" BackgroundColor="White" Padding="16,0" HeightRequest="56">
+                    <Grid ColumnDefinitions="Auto, *, Auto">
+                        <Label Grid.Column="0" Text="🔒" FontSize="18" VerticalOptions="Center" TextColor="#757575" />
+                        <Entry x:Name="PasswordEntry" Grid.Column="1" Placeholder="Şifre" IsPassword="True" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+                        <Label x:Name="PasswordEyeIcon" Grid.Column="2" Text="👁️" FontSize="18" VerticalOptions="Center" TextColor="#9E9E9E">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTogglePasswordVisibilityTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                </Border>
+
+                <Label Text="Şifremi Unuttum?" FontSize="12" FontAttributes="Bold" TextColor="#1B5E20" HorizontalOptions="End">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnForgotPasswordTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <!-- Login Button -->
+                <Button x:Name="LoginButton" Clicked="OnLoginClicked" Text="Giriş Yap ➔" BackgroundColor="#1B5E20" TextColor="White" FontAttributes="Bold" FontSize="16" CornerRadius="28" HeightRequest="56" Margin="0,16,0,0" />
+                
+            </VerticalStackLayout>
+
+            <!-- Register Link -->
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,20,0,0">
+                <Label Text="Yeni öğrenci misin? " FontSize="12" TextColor="#757575" />
+                <Label Text="Buradan kayıt ol" FontSize="12" FontAttributes="Bold" TextColor="#1B5E20">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRegisterTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+            <!-- Removed Admin Link -->
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

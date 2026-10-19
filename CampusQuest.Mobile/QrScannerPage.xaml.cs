@@ -113,4 +113,13 @@ public partial class QrScannerPage : ContentPage
     {
         await Navigation.PopAsync();
     }
+
+    private bool _isFlashOn = false;
+    private void FlashButton_Clicked(object sender, EventArgs e)
+    {
+        _isFlashOn = !_isFlashOn;
+        BarcodeReader.IsTorchOn = _isFlashOn;
+        FlashButton.Text = _isFlashOn ? "🔦 Fener (Açık)" : "🔦 Fener";
+        FlashButton.BackgroundColor = _isFlashOn ? Color.FromArgb("#88FFD600") : Color.FromArgb("#44FFFFFF");
+    }
 }
