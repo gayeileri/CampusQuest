@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CampusQuest.Mobile.AdminLoginPage"
+             BackgroundColor="#1B5E20"
+             Shell.NavBarIsVisible="False">
+             
+    <ScrollView>
+        <VerticalStackLayout Padding="30,80,30,30" Spacing="24" HorizontalOptions="Center">
+
+            <!-- Logo / Header -->
+            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                <Label Text="🛡️" FontSize="60" HorizontalOptions="Center" />
+                <Label Text="Yönetici Paneli" FontSize="28" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                <Label Text="Sadece yetkili personel girişi içindir." FontSize="14" TextColor="#A5D6A7" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Card -->
+            <Border StrokeShape="RoundRectangle 24" BackgroundColor="White" Stroke="Transparent" Padding="24" Margin="0,20,0,0">
+                <VerticalStackLayout Spacing="16">
+                    
+                    <Border StrokeShape="RoundRectangle 12" Stroke="#E0E0E0" BackgroundColor="#F5F5F5" Padding="12,0" HeightRequest="56">
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Label Grid.Column="0" Text="👤" FontSize="18" VerticalOptions="Center" TextColor="#757575" />
+                            <Entry x:Name="AdminUserEntry" Grid.Column="1" Placeholder="Yönetici Kullanıcı Adı" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <Border StrokeShape="RoundRectangle 12" Stroke="#E0E0E0" BackgroundColor="#F5F5F5" Padding="12,0" HeightRequest="56">
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            <Label Grid.Column="0" Text="🔑" FontSize="18" VerticalOptions="Center" TextColor="#757575" />
+                            <Entry x:Name="AdminPassEntry" Grid.Column="1" Placeholder="Şifre" IsPassword="True" FontSize="14" VerticalOptions="Center" Margin="12,0,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Login Button -->
+                    <Button x:Name="AdminLoginButton" Clicked="OnAdminLoginClicked" Text="Giriş Yap" BackgroundColor="#D32F2F" TextColor="White" FontAttributes="Bold" FontSize="16" CornerRadius="12" HeightRequest="56" Margin="0,16,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Back to User Login Link -->
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,20,0,0">
+                <Label Text="Öğrenci misiniz? " FontSize="14" TextColor="#A5D6A7" />
+                <Label Text="Öğrenci Girişine Dön" FontSize="14" FontAttributes="Bold" TextColor="White">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackToStudentLoginTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

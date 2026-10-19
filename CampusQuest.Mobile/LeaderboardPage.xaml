@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CampusQuest.Mobile.LeaderboardPage"
+             BackgroundColor="#F9F9F9"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,40,20,20" Spacing="24">
+            
+            <!-- Top Header -->
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <Label Grid.Column="0" Text="🗺️" FontSize="24" VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="Kampüs Gezgini" FontSize="20" FontAttributes="Bold" TextColor="#1B5E20" VerticalOptions="Center" Margin="8,0,0,0" />
+                <Label Grid.Column="2" Text="👤" FontSize="24" VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnProfileTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+
+            <!-- Page Title -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                <Label Text="Liderlik Tablosu" FontSize="22" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center" />
+                <Label Text="Kampüsün en aktif gezginleri" FontSize="12" TextColor="#757575" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Toggle Switch -->
+            <Border StrokeShape="RoundRectangle 20" BackgroundColor="#E8F5E9" Stroke="Transparent" HorizontalOptions="Center" Padding="4">
+                <Grid ColumnDefinitions="120, 120">
+                    <Border x:Name="TabHaftalik" Grid.Column="0" StrokeShape="RoundRectangle 16" BackgroundColor="#1B5E20" Stroke="Transparent" Padding="0,8">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnHaftalikTapped" />
+                        </Border.GestureRecognizers>
+                        <Label x:Name="TabHaftalikLabel" Text="Haftalık" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Border x:Name="TabTumZamanlar" Grid.Column="1" StrokeShape="RoundRectangle 16" BackgroundColor="Transparent" Stroke="Transparent" Padding="0,8">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTumZamanlarTapped" />
+                        </Border.GestureRecognizers>
+                        <Label x:Name="TabTumZamanlarLabel" Text="Tüm Zamanlar" FontSize="12" FontAttributes="Bold" TextColor="#757575" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Podium -->
+            <Grid ColumnDefinitions="*, *, *" RowDefinitions="Auto, Auto" Margin="0,20,0,10" ColumnSpacing="10" VerticalOptions="End">
+                
+                <!-- 2. Sıra -->
+                <VerticalStackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="End" Spacing="8">
+                    <Grid WidthRequest="60" HeightRequest="60" HorizontalOptions="Center">
+                        <Border StrokeShape="RoundRectangle 30" Stroke="White" StrokeThickness="3" WidthRequest="60" HeightRequest="60">
+                            <Image Source="logo.png" Aspect="AspectFill" BackgroundColor="#E0E0E0" />
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#E0E0E0" StrokeThickness="1" WidthRequest="24" HeightRequest="24" HorizontalOptions="Start" VerticalOptions="Start" Margin="-4,-4,0,0">
+                            <Label Text="2" FontSize="12" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+                    <Label Text="{Binding SecondPlace.Username}" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center" />
+                    <Label Text="{Binding SecondPlace.TotalXp, StringFormat='{0} XP'}" FontSize="11" FontAttributes="Bold" TextColor="#757575" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- 1. Sıra (Ortada, daha yüksek) -->
+                <VerticalStackLayout Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="End" Spacing="8">
+                    <Label Text="👑" FontSize="32" HorizontalOptions="Center" Margin="0,0,0,-15" ZIndex="1" />
+                    <Grid WidthRequest="80" HeightRequest="80" HorizontalOptions="Center">
+                        <Border StrokeShape="RoundRectangle 40" Stroke="#4CAF50" StrokeThickness="4" WidthRequest="80" HeightRequest="80">
+                            <Image Source="logo.png" Aspect="AspectFill" BackgroundColor="#E8F5E9" />
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 14" BackgroundColor="#4CAF50" Stroke="White" StrokeThickness="2" WidthRequest="28" HeightRequest="28" HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,-10">
+                            <Label Text="1" FontSize="14" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+                    <Border StrokeShape="RoundRectangle 8" BackgroundColor="#1B5E20" Stroke="Transparent" Padding="8,16" Margin="0,15,0,0">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="{Binding FirstPlace.Username}" FontSize="16" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                            <Label Text="{Binding FirstPlace.TotalXp, StringFormat='{0} XP'}" FontSize="11" FontAttributes="Bold" TextColor="#A5D6A7" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- 3. Sıra -->
+                <VerticalStackLayout Grid.Column="2" Grid.Row="1" VerticalOptions="End" Spacing="8">
+                    <Grid WidthRequest="60" HeightRequest="60" HorizontalOptions="Center">
+                        <Border StrokeShape="RoundRectangle 30" Stroke="White" StrokeThickness="3" WidthRequest="60" HeightRequest="60">
+                            <Image Source="logo.png" Aspect="AspectFill" BackgroundColor="#E0E0E0" />
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="#E0E0E0" StrokeThickness="1" WidthRequest="24" HeightRequest="24" HorizontalOptions="End" VerticalOptions="Start" Margin="0,-4,-4,0">
+                            <Label Text="3" FontSize="12" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+                    <Label Text="{Binding ThirdPlace.Username}" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center" />
+                    <Label Text="{Binding ThirdPlace.TotalXp, StringFormat='{0} XP'}" FontSize="11" FontAttributes="Bold" TextColor="#757575" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- List Items -->
+            <VerticalStackLayout Spacing="12">
+                <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding RestOfLeaderboard}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border StrokeShape="RoundRectangle 12" BackgroundColor="White" Stroke="Transparent" Padding="16,12">
+                                <Grid ColumnDefinitions="30, Auto, *, Auto">
+                                    <Label Grid.Column="0" Text="{Binding Rank}" FontSize="16" FontAttributes="Bold" TextColor="#757575" VerticalOptions="Center" />
+                                    <Border Grid.Column="1" StrokeShape="RoundRectangle 16" WidthRequest="32" HeightRequest="32" Margin="0,0,12,0">
+                                        <Image Source="logo.png" Aspect="AspectFill" BackgroundColor="#E0E0E0" />
+                                    </Border>
+                                    <Label Grid.Column="2" Text="{Binding Username}" FontSize="14" FontAttributes="Bold" TextColor="#333333" VerticalOptions="Center" />
+                                    <Label Grid.Column="3" Text="{Binding TotalXp, StringFormat='{0} XP'}" FontSize="14" FontAttributes="Bold" TextColor="#4CAF50" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <!-- You (Current User) -->
+                <Border StrokeShape="RoundRectangle 12" BackgroundColor="#E8F5E9" Stroke="#4CAF50" StrokeThickness="1" Padding="16,12" Margin="0,8,0,0">
+                    <Grid ColumnDefinitions="30, Auto, *, Auto">
+                        <Label Grid.Column="0" Text="{Binding CurrentUser.Rank}" FontSize="16" FontAttributes="Bold" TextColor="#1B5E20" VerticalOptions="Center" />
+                        <Border Grid.Column="1" StrokeShape="RoundRectangle 16" WidthRequest="32" HeightRequest="32" Margin="0,0,12,0">
+                            <Image Source="logo.png" Aspect="AspectFill" BackgroundColor="#A5D6A7" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="2" VerticalOptions="Center">
+                            <Label Text="Sen" FontSize="14" FontAttributes="Bold" TextColor="#1B5E20" />
+                            <Label Text="Kendi sıran" FontSize="10" TextColor="#2E7D32" />
+                        </VerticalStackLayout>
+                        <Border Grid.Column="3" StrokeShape="RoundRectangle 8" BackgroundColor="#1B5E20" Padding="8,4" VerticalOptions="Center">
+                            <Label Text="{Binding CurrentUser.TotalXp, StringFormat='{0} XP'}" FontSize="12" FontAttributes="Bold" TextColor="White" />
+                        </Border>
+                    </Grid>
+                </Border>
+                
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

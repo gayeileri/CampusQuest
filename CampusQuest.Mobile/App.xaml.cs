@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CampusQuest.Mobile
 {
@@ -11,7 +11,16 @@ namespace CampusQuest.Mobile
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            var token = Preferences.Get("AuthToken", string.Empty);
+            if (string.IsNullOrEmpty(token))
+            {
+                MainPage = new LoginPage();
+            }
+            else
+            {
+                MainPage = new AppShell();
+            }
+            return new Window(MainPage);
         }
     }
 }
