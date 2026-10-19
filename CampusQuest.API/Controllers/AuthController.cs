@@ -1,4 +1,4 @@
-﻿using CampusQuest.Domain.Entities;
+using CampusQuest.Domain.Entities;
 using CampusQuest.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -75,11 +75,15 @@ namespace CampusQuest.API.Controllers
         {
             var jwtSection = _configuration.GetSection("Jwt");
             var key = jwtSection.GetValue<string>("Key");
-            var issuer = jwtSection.GetValue<string>("Issuer");
-            var audience = jwtSection.GetValue<string>("Audience");
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                key = "CampusQuest_Dev_Secret_Key_For_Development_Only_2026_Minimum_32_Chars!";
+            }
+            var issuer = jwtSection.GetValue<string>("Issuer") ?? "CampusQuest";
+            var audience = jwtSection.GetValue<string>("Audience") ?? "CampusQuestMobile";
             var expiresIn = jwtSection.GetValue<int?>("ExpiresInMinutes") ?? 60;
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key ?? string.Empty));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>

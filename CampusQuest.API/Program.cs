@@ -22,10 +22,20 @@ builder.Services.AddCors(options =>
 
 // Configure JWT Authentication
 var jwtSection = builder.Configuration.GetSection("Jwt");
-var jwtKey = jwtSection.GetValue<string>("Key")
-    ?? throw new InvalidOperationException("JWT signing key is not configured.");
-var jwtIssuer = jwtSection.GetValue<string>("Issuer");
-var jwtAudience = jwtSection.GetValue<string>("Audience");
+var jwtKey = jwtSection.GetValue<string>("Key");
+if (string.IsNullOrWhiteSpace(jwtKey))
+{
+    if (builder.Environment.IsDevelopment())
+    {
+        jwtKey = "CampusQuest_Dev_Secret_Key_For_Development_Only_2026_Minimum_32_Chars!";
+    }
+    else
+    {
+        throw new InvalidOperationException("JWT signing key is not configured. Set 'Jwt:Key' in configuration or 'Jwt__Key' environment variable.");
+    }
+}
+var jwtIssuer = jwtSection.GetValue<string>("Issuer") ?? "CampusQuest";
+var jwtAudience = jwtSection.GetValue<string>("Audience") ?? "CampusQuestMobile";
 
 builder.Services.AddAuthentication(options =>
     {
